@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title> Attrape les lettres!</title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+		<script src="js/lvl-uuid.js"></script>
+		<script src="js/lvl-drag-drop.js"></script>
+</head>
+
+<body ng-app="starter" ng-controller="AppCtrl">
+
+  <ion-pane>
+<ion-header-bar align-title="left" class="bar-positive">
+  
+  <h1 class="title">Attrape les lettres !</h1>
+      
+  <div class="buttons">
+    <button class="button" ng-click="openModal()">Aide <i class="radio-icon ion-help"></i></button>
+  </div>
+</ion-header-bar>
+    <ion-content  scroll="false">
+      
+	  <!--    partie de l'image de chat-->
+        <div id="chat" style="display:block">
+		
+	    
+		  <ion-list>
+			<ion-item>
+			 <center>		  
+			  <IMG  width="128px" height="128px"  SRC="img/chat.png" ALT="chat">			 
+			  </center>
+			</ion-item>
+			<ion-item>
+			  <!--    la liste des lettres [C][][][][] : seulement la première case est remplie , les autres cases à compléter par l'utilisateur -->
+			 <center>		  
+							<span class="slot C"></span>
+							<span id="C_trou2" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+							<span id="C_trou3" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+							<span id="C_trou4" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+			 </center>
+			</ion-item>
+			<ion-item>
+			<!--    la liste des lettres proposées pour compléter le mot demandé [P][A][T][H][E] -->
+			 <center>	
+						<span class="slot peg P" x-lvl-draggable="true"  x-lvl-drag-value="P" data-color="P"> </span>
+						<span class="slot peg A" x-lvl-draggable="true"  x-lvl-drag-value="A" data-color="A"> </span>
+						<span class="slot peg T" x-lvl-draggable="true" x-lvl-drag-value="T" data-color="T"> </span>
+						<span class="slot peg H" x-lvl-draggable="true" x-lvl-drag-value="H" data-color="H"> </span>
+						<span class="slot peg M" x-lvl-draggable="true"  x-lvl-drag-value="M" data-color="M"> </span>
+			 
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+						<button class="button button-block button-balanced"  ng-click="C_verif()" type="submit">Valider
+						 <i class="radio-icon ion-checkmark"></i></button>
+						<button class="button button-block" onclick="changerimg()">changer l'image
+						 <i class="radio-icon ion-refresh"></i></button>
+			 </center>
+			</ion-item>
+		  </ion-list>
+		</div>
+
+			<!--    la partie de l'image de la pomme -->
+	    <div id="pomme" style="display:none">
+		
+		  <ion-list>
+			<ion-item>
+			 <center>		  
+			  <IMG  width="128px" height="128px"  SRC="img/pomme.png" ALT="pomme">			 
+			  </center>
+			</ion-item>
+			<ion-item>
+			 <center>		  
+						<!--    la liste des lettres qui forment le mot pomme avec 3 cases initialisées [P][][M][][E] -->
+			 	        <span class="slot P"></span>
+						<span id="P_trou2" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span class="slot M"></span>
+						<span id="P_trou4" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span class="slot E"></span>
+				  
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+					 <!--    la liste des lettres proposées pour compléter le mot demandé [H][O][P][M][T] -->
+					<span class="slot peg H" x-lvl-draggable="true"  x-lvl-drag-value="H" data-color="H"> </span>
+					<span class="slot peg O" x-lvl-draggable="true"  x-lvl-drag-value="O" data-color="O"> </span>
+					<span class="slot peg P" x-lvl-draggable="true"  x-lvl-drag-value="P" data-color="P"> </span>
+					<span class="slot peg M" x-lvl-draggable="true" x-lvl-drag-value="M" data-color="M"> </span>
+					<span class="slot peg T" x-lvl-draggable="true" x-lvl-drag-value="T" data-color="T"> </span>
+			 
+			 
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+						<button class="button button-block button-balanced"  ng-click="P_verif()" type="submit">Valider
+						 <i class="radio-icon ion-checkmark"></i></button>
+						<button class="button button-block" onclick="changerimg()" type="submit">changer l'image
+							<i class="radio-icon ion-refresh"></i></button>
+			 </center>
+			</ion-item>
+		  </ion-list>
+		</div>
+		<!--    la partie de l'image de dragon -->
+    <div id="dragon" style="display:none">
+		
+		  <ion-list>
+			<ion-item>
+			 <center>		  
+			  <IMG  width="128px" height="128px"  SRC="img/dragon.png" ALT="dragon">			 
+			  </center>
+			</ion-item>
+			<ion-item>
+			 <center>		  
+			<!--    la liste des lettres qui forment le mot dragon avec 3 cases initialisées [D][][][G][][N] -->
+			 	        <span class="slot D"></span>
+						<span id="D_trou2" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span id="D_trou3" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span class="slot G"></span>
+						<span id="D_trou5" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+					    <span class="slot N"></span>
+				  
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+					 <!--    la liste des lettres proposées pour compléter le mot demandé [R][H][M][A][O] -->
+					<span class="slot peg R" x-lvl-draggable="true"  x-lvl-drag-value="R" data-color="R"> </span>
+					<span class="slot peg H" x-lvl-draggable="true" x-lvl-drag-value="H" data-color="H"> </span>
+					<span class="slot peg M" x-lvl-draggable="true"  x-lvl-drag-value="M" data-color="M"> </span>
+					<span class="slot peg A" x-lvl-draggable="true"  x-lvl-drag-value="A" data-color="A"> </span>
+					<span class="slot peg O" x-lvl-draggable="true" x-lvl-drag-value="O" data-color="O"> </span>
+		
+			 
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+						<button class="button button-block button-balanced"  ng-click="D_verif()" type="submit">Valider
+						 <i class="radio-icon ion-checkmark"></i></button>
+						<button class="button button-block" onclick="changerimg()" type="submit">changer l'image
+							 <i class="radio-icon ion-refresh"></i></button>
+			 </center>
+			</ion-item>
+		  </ion-list>
+		</div>
+		<!--    Partie de l'image de mammouth -->
+    <div id="mammouth" style="display:none">
+		
+		  <ion-list>
+			<ion-item>
+			 <center>		  
+			  <IMG  width="128px" height="128px"  SRC="img/mammouth.png" ALT="dragon">			 
+			  </center>
+			</ion-item>
+			<ion-item>
+			 <center>		  
+						<!--    la liste des lettres qui forment le mot mammouth [M][A][][][][U][][H] -->
+			 	        <span class="slot M"></span>
+						<span class="slot A"></span>
+						<span id="M_trou3" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+					    <span id="M_trou4" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span id="M_trou5" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+						<span class="slot U"></span>
+						<span id="M_trou7" class="slot" x-lvl-draggable='true' x-lvl-drop-target="true" x-lvl-drop-value="" x-on-drop="dropped(dragEl, dropEl)"></span>
+					    <span class="slot H"></span>
+				  
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+					 <!--    la liste des lettres proposées pour compléter le mot mammouth [P][O][U][M][T][M] -->
+					<span class="slot peg P" x-lvl-draggable="true" x-lvl-drag-value="P" data-color="P"> </span>
+					<span class="slot peg O" x-lvl-draggable="true"  x-lvl-drag-value="O" data-color="O"> </span>
+					<span class="slot peg U" x-lvl-draggable="true"  x-lvl-drag-value="U" data-color="U"> </span>
+					<span class="slot peg M" x-lvl-draggable="true"  x-lvl-drag-value="M" data-color="M"> </span>
+					<span class="slot peg T" x-lvl-draggable="true" x-lvl-drag-value="T" data-color="T"> </span>
+					<span class="slot peg M" x-lvl-draggable="true"  x-lvl-drag-value="M" data-color="M"> </span>
+			 
+			 </center>
+			</ion-item>
+			<ion-item>
+			 <center>	
+						<button class="button button-block button-balanced"  ng-click="M_verif()" type="submit">Valider
+						 <i class="radio-icon ion-checkmark"></i></button>
+						<button class="button button-block" onclick="changerimg()" type="submit">changer l'image
+							 <i class="radio-icon ion-refresh"></i></button>
+			 </center>
+			</ion-item>
+		  </ion-list>
+		</div>
+
+
+
+    </ion-content>
+  </ion-pane>
+  <script id="modal.html" type="text/ng-template">
+    <div class="modal">
+
+	<div class="bar bar-header bar-positive">
+	<button class="button" ng-click="closeModal()">Retour</button>
+      <h1 class="title">Aide <i class="radio-icon ion-help"></i></h1>
+	  
+    </div>
+<div style="padding:20px;margin:20px;text-align: justify;"> <br/>Veillez deplacez les lettres qui se trouvent en bas pour compléter le mot décrit dans l'image.<br>
+Pour vous aidez à mettre les lettres dans le bon ordre, vous trouverez un ou des caractères qui sont déjà dans la bonne place.
+											
+
+</div>
+ 
+
+
+  </div>
+  </script>
+  <script>
+ /*changer d'une image à une autre*/
+function changerimg()
+{
+		var  chat = document.getElementById('chat').style.display;
+		var  pomme = document.getElementById('pomme').style.display;
+		var  dragon = document.getElementById('dragon').style.display;
+		var  mammouth = document.getElementById('mammouth').style.display;
+		
+		if(chat=='block'){
+					document.getElementById('chat').style.display='none';
+					document.getElementById('pomme').style.display='block';}
+
+	 	 		
+		else if (pomme=='block'){
+					document.getElementById('pomme').style.display='none';
+					document.getElementById('dragon').style.display='block';}
+
+		else if (dragon=='block'){
+					document.getElementById('dragon').style.display='none';
+					document.getElementById('mammouth').style.display='block';}
+
+		else if (mammouth=='block'){
+					document.getElementById('mammouth').style.display='none';
+					document.getElementById('chat').style.display='block';} 
+
+} 	
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+/* Empty. Add your own CSS if you like */
+
+			.lvl-over {
+				/* applied to a drop target when a draggable object is over it */
+				border: 2px dashed black !important;
+			}
+
+			.lvl-target {
+				/* applied to all drop targets when a drag operation begins, used to indicate drop targets on a page */
+				background-color: #ddd;
+				opacity: .5;
+			}
+
+			[draggable] {
+				-moz-user-select: none;
+				-khtml-user-select: none;
+				-webkit-user-select: none;
+				user-select: none;
+				/* Required to make elements draggable in old WebKit */
+				-khtml-user-drag: element;
+				-webkit-user-drag: element;
+				cursor: move; 
+			}
+
+			.peg {
+				text-align: center;
+				font-weight: bold;
+				 
+			}
+
+			.slot {
+				margin-right:2px;
+				margin-top:2px;
+				width:33px;
+				height:33px;
+			    display:inline-block;
+			    border: none;
+			}
+
+			.A {
+				 background: url("../img/a.png") no-repeat;
+			}
+
+			.B {
+				 background: url("../img/b.png") no-repeat;
+			}
+			.C {
+				 background: url("../img/c.png") no-repeat;
+			}
+
+			.D {
+				 background: url("../img/d.png") no-repeat;
+			}
+			.E {
+				 background: url("../img/e.png") no-repeat;
+			}
+
+			.P{
+				 background: url("../img/p.png") no-repeat;
+			}
+			.G {
+				 background: url("../img/g.png") no-repeat;
+			}
+
+			.H {
+				 background: url("../img/h.png") no-repeat;
+			}
+			.T {
+				 background: url("../img/t.png") no-repeat;
+			}
+ 
+			.M {
+				 background: url("../img/m.png") no-repeat;
+			}
+			.U {
+				 background: url("../img/u.png") no-repeat;
+			}
+			.O{
+				 background: url("../img/o.png") no-repeat;
+			}
+			.N{
+				 background: url("../img/n.png") no-repeat;
+			}
+ 
+			.R{
+				 background: url("../img/r.png") no-repeat;
+			}
